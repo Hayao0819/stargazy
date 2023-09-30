@@ -1,15 +1,12 @@
 package kernel
 
-type Binary struct{
-
+type Binary struct {
 }
 
-type Source struct{
-	Path string
+type Source struct {
+	Path     string
 	Upstream string
 }
 
-type Config struct{
-
+type Config struct {
 }
-

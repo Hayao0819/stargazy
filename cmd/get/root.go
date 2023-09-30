@@ -2,9 +2,9 @@ package get
 
 import "github.com/spf13/cobra"
 
-func Root()*cobra.Command{
+func Root() *cobra.Command {
 	cmd := cobra.Command{
-		Use: "get",
+		Use:   "get",
 		Short: "Get kernel source",
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.PrintErrln("Sorry that his function is not implemented...")

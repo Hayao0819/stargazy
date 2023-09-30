@@ -4,7 +4,8 @@ import "github.com/spf13/cobra"
 
 func Root() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "list",
+		Use:   "list",
+		Short: "SHow the various list",
 	}
 
 	return cmd

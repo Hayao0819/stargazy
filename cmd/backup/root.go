@@ -9,6 +9,7 @@ import (
 func Root() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "backup",
+		Short:   "Manage kernel backup",
 		Aliases: []string{"bak", "b"},
 	}
 
