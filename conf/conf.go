@@ -11,6 +11,10 @@ type AppConfig struct {
 var Config = AppConfig{}
 
 func Initilize(configPath string) (*AppConfig, error) {
+	if configPath == "" {
+		return &Config, nil
+	}
+
 	viper.SetConfigFile(configPath)
 
 	viper.AutomaticEnv()
