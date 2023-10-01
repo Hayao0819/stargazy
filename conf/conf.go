@@ -5,9 +5,10 @@ import (
 )
 
 type AppConfig struct {
-	Name string `json:"name"`
+	BackUpDir string `mapstructure:"backup_dir"`
 }
 
+// Global config
 var Config = AppConfig{}
 
 func Initilize(configPath string) (*AppConfig, error) {
@@ -28,4 +29,8 @@ func Initilize(configPath string) (*AppConfig, error) {
 	}
 
 	return &Config, nil
+}
+
+func ApplyDefault(){
+
 }

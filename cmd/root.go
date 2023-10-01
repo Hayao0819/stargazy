@@ -5,7 +5,7 @@ import (
 	"github.com/Hayao0819/stargazy/cmd/get"
 	"github.com/Hayao0819/stargazy/cmd/list"
 	"github.com/Hayao0819/stargazy/conf"
-	"github.com/Hayao0819/stargazy/utils"
+	"github.com/Hayao0819/stargazy/utils/error"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +22,7 @@ func Root() *cobra.Command {
 
 	cobra.OnInitialize(func() {
 		if _, err := conf.Initilize(configFile); err != nil {
-			utils.ExitWithErr(cmd, err)
+			errutils.ExitWithErr(cmd, err)
 		}
 	})
 
