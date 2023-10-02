@@ -14,3 +14,10 @@ func ExitWithErr(cmd *cobra.Command, err error) {
 		os.Exit(1)
 	}
 }
+
+func RunFuncWithErrorExit(cmd *cobra.Command, fn func() error) {
+	err := fn()
+	if err != nil {
+		ExitWithErr(cmd, err)
+	}
+}

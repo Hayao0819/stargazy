@@ -5,7 +5,8 @@ import (
 	"github.com/Hayao0819/stargazy/cmd/get"
 	"github.com/Hayao0819/stargazy/cmd/list"
 	"github.com/Hayao0819/stargazy/conf"
-	"github.com/Hayao0819/stargazy/utils/error"
+	errutils "github.com/Hayao0819/stargazy/utils/error"
+
 	"github.com/spf13/cobra"
 )
 
@@ -21,9 +22,8 @@ func Root() *cobra.Command {
 	cmd.AddCommand(backup.Root(), list.Root(), get.Root())
 
 	cobra.OnInitialize(func() {
-		if _, err := conf.Initilize(configFile); err != nil {
-			errutils.ExitWithErr(cmd, err)
-		}
+		errutils.RunFuncWithErrorExit(cmd, func() error { return conf.Initilize(configFile) })
+		errutils.RunFuncWithErrorExit(cmd, conf.Validate)
 	})
 
 	return cmd

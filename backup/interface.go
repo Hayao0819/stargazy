@@ -1,19 +1,16 @@
 package backup
 
 type Backup interface {
-	Add() error
 	Remove() error
 	Restore() error
 	Files() []string
 }
 
 type BackupList interface {
-	Add(name string, path ...string) error
+	Add(name string, files ...string) error
 	Remove(name string) error
-	List() []Backup
+	GetList() ([]Backup, error)
 	Find(name string) (*Backup, error)
+	Initilize() error
 }
 
-func GetFromLocal(*BackupList) error {
-	return nil
-}

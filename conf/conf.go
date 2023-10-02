@@ -1,6 +1,8 @@
 package conf
 
 import (
+	"errors"
+
 	"github.com/spf13/viper"
 )
 
@@ -11,9 +13,9 @@ type AppConfig struct {
 // Global config
 var Config = AppConfig{}
 
-func Initilize(configPath string) (*AppConfig, error) {
+func Initilize(configPath string) (error) {
 	if configPath == "" {
-		return &Config, nil
+		return nil
 	}
 
 	viper.SetConfigFile(configPath)
@@ -21,14 +23,21 @@ func Initilize(configPath string) (*AppConfig, error) {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		return nil, err
+		return err
 	}
 
 	if err := viper.Unmarshal(&Config); err != nil {
-		return nil, err
+		return err
 	}
 
-	return &Config, nil
+	return nil
+}
+
+func Validate()(error){
+	if Config.BackUpDir == ""{
+		return errors.New("Empty backup directory")
+	}
+	return nil
 }
 
 func ApplyDefault(){

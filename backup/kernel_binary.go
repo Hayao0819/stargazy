@@ -2,18 +2,23 @@ package backup
 
 import (
 	"time"
-
-	"github.com/Hayao0819/stargazy/kernel"
+	//"github.com/Hayao0819/stargazy/kernel"
 )
 
-type KernelBinary struct {
+type KernelBackup struct {
 	Name string
-	Path *kernel.Binary
+	Path []string
 	Date time.Time
 }
 
+func (k *KernelBackup) Remove() error {
+	return nil
+}
 
+func (k *KernelBackup) Restore() error {
+	return nil
+}
 
-func (k *KernelBinary) Add(name string, path ...string) {
-	
+func (K *KernelBackup) Files() []string {
+	return nil
 }
