@@ -15,7 +15,7 @@ func RunAllBackup(l BackupList) error {
 	return nil
 }
 
-func RunAllKernelBackup()error{
+func RunAllKernelBackup() error {
 	l := KernelBackupList{}
 
 	return RunAllBackup(&l)

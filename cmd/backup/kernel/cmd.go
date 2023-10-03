@@ -16,7 +16,7 @@ func Cmd() *cobra.Command {
 		Args:    cobra.MaximumNArgs(1),
 		Aliases: []string{"k"},
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) != 1 && (! ignoreErr) {
+			if len(args) != 1 && (!ignoreErr) {
 				// Ask kernel path
 				return fmt.Errorf("please specify a kernel path")
 			}
@@ -25,10 +25,10 @@ func Cmd() *cobra.Command {
 
 		RunE: func(cmd *cobra.Command, args []string) error {
 			list := backup.KernelBackupList{}
-			errutils.RunFuncWithErrorExit(cmd,list.Initilize)
+			errutils.RunFuncWithErrorExit(cmd, list.Initilize)
 
 			return list.Add("hoge", args...)
-			
+
 		},
 	}
 

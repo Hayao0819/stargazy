@@ -7,10 +7,10 @@ import (
 
 var Pwd string = ""
 
-func GetDebugConfPath() (string) {
+func GetDebugConfPath() string {
 	return path.Join(Pwd, "debug.json")
 }
 
-func init(){
+func init() {
 	Pwd, _ = os.Getwd()
 }

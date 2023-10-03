@@ -9,7 +9,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-
 func GenConfigCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "genconfig",

@@ -13,4 +13,3 @@ type BackupList interface {
 	Find(name string) (*Backup, error)
 	Initilize() error
 }
-

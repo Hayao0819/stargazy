@@ -13,7 +13,7 @@ type AppConfig struct {
 // Global config
 var Config = AppConfig{}
 
-func Initilize(configPath string) (error) {
+func Initilize(configPath string) error {
 	if configPath == "" {
 		return nil
 	}
@@ -33,13 +33,13 @@ func Initilize(configPath string) (error) {
 	return nil
 }
 
-func Validate()(error){
-	if Config.BackUpDir == ""{
+func Validate() error {
+	if Config.BackUpDir == "" {
 		return errors.New("Empty backup directory")
 	}
 	return nil
 }
 
-func ApplyDefault(){
+func ApplyDefault() {
 
 }

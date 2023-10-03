@@ -1,13 +1,13 @@
 package kernel
 
 type Binary struct {
-	Kernel string
+	Kernel    string
 	Initramfs string
 }
 
-func NewBinary(kernel, initiramfs string)*Binary{
+func NewBinary(kernel, initiramfs string) *Binary {
 	return &Binary{
-		Kernel: kernel,
+		Kernel:    kernel,
 		Initramfs: initiramfs,
 	}
 }
