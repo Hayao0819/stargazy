@@ -9,11 +9,12 @@ import (
 
 func root() *cobra.Command {
 	root := cobra.Command{
-		Use:   "sg-tools",
-		Short: "Developing helper",
+		Use:          "sg-tools",
+		Short:        "Developing helper",
+		SilenceUsage: true,
 	}
 
-	root.AddCommand(cmd.GenConfigCmd(), cmd.RunCmd())
+	root.AddCommand(cmd.GenConfigCmd(), cmd.RunCmd(), cmd.InitCmd())
 
 	return &root
 }
