@@ -26,9 +26,9 @@ func GenConfigCmd() *cobra.Command {
 			viper.Set("backup_dir", path.Join(lib.Pwd, "testdir", "backup"))
 
 			// Write
-			viper.WriteConfigAs(json)
+			return viper.WriteConfigAs(json)
 
-			return nil
+			//return nil
 		},
 	}
 	return &cmd

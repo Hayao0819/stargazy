@@ -37,6 +37,8 @@ func (l *KernelBackupList) Find(name string) (*Backup, error) {
 
 func (l *KernelBackupList) Initilize() error {
 	l.BaseDir = pathutils.FromSlash(GetBackupDir() + "/kernel-binary/")
-	os.MkdirAll(l.BaseDir, 0750)
+	if err := os.MkdirAll(l.BaseDir, 0750); err != nil {
+		return nil
+	}
 	return nil
 }

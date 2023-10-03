@@ -33,6 +33,7 @@ func Cmd() *cobra.Command {
 	}
 
 	cmd.Flags().BoolVarP(&ignoreErr, "ignore-error", "", false, "Ignore argument error")
+	// nolint:errcheck
 	cmd.Flags().MarkHidden("ignore-error")
 	return &cmd
 }
