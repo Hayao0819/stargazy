@@ -7,3 +7,21 @@
 ## About The Project
 All in one tool to manage, build, backup linux kernels.
 
+## Install
+
+## Usage
+
+## Document
+
+
+## Starting development
+
+At first, you should install Golang, then please run following command.
+
+```bash
+./devtools.sh init
+```
+
+This script will install tools and configure git.
+
+
