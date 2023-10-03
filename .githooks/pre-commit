@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+files="$(gofmt -e -l -s .)"
+
+if [ -n "$files" ]; then
+    echo "Please format following files with \"gofmt -s -w .\"" >&2
+    echo "$files" | sed "s/^/  /g"
+    exit 1
+fi
+exit 0
