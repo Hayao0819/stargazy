@@ -22,12 +22,12 @@ func Cmd() *cobra.Command {
 		},
 
 		RunE: func(cmd *cobra.Command, args []string) error {
-			list := backup.List{}
-			if err := list.Initilize("kernel-backup"); err != nil {
+			baklist := backup.List{}
+			if err := baklist.Initilize("kernel-backup"); err != nil {
 				return err
 			}
 
-			return list.Add(args...)
+			return nil
 
 		},
 	}

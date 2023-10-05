@@ -9,9 +9,10 @@ import (
 
 func root() *cobra.Command {
 	root := cobra.Command{
-		Use:          "sg-tools",
-		Short:        "Developing helper",
-		SilenceUsage: true,
+		Use:           "sg-tools",
+		Short:         "Developing helper",
+		SilenceUsage:  true,
+		SilenceErrors: true,
 	}
 
 	root.AddCommand(cmd.GenConfigCmd(), cmd.RunCmd(), cmd.InitCmd())
@@ -22,7 +23,6 @@ func root() *cobra.Command {
 func main() {
 	root := root()
 	if err := root.Execute(); err != nil {
-		root.PrintErr(err)
 		os.Exit(1)
 	}
 }

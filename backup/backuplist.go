@@ -1,13 +1,12 @@
 package backup
 
 import (
+	"encoding/json"
 	"path"
 	"time"
 
 	"os"
 
-	//"github.com/Hayao0819/stargazy/kernel"
-	//errutils "github.com/Hayao0819/stargazy/utils/error"
 	fileutils "github.com/Hayao0819/stargazy/utils/file"
 	jsonutils "github.com/Hayao0819/stargazy/utils/json"
 	pathutils "github.com/Hayao0819/stargazy/utils/path"
@@ -16,36 +15,47 @@ import (
 )
 
 type List struct {
-	List    []Bak
-	Id      string
-	BaseDir string
+	List       []*Bak
+	Id         string
+	BaseDir    string
+	Initilized bool
+}
+
+var timeLayout = "20060102150405"
+
+// オリジナルのファイル
+func NewBakFromOriginalFiles(date time.Time, files ...string) *Bak {
+	b := Bak{
+		Date:  date,
+		Files: []Files{},
+	}
+
+	for _, f := range files {
+		_, noext, ext := pathutils.Split(f)
+		id := randstr.String(5)
+
+		b.Files = append(b.Files, Files{
+			Original: f,
+			Backup:   strutils.Join(noext, "-", id, ext),
+			Id:       id,
+		})
+	}
+
+	return &b
 }
 
 // ファイルをバックアップします
 func (l *List) Add(files ...string) error {
-	bak := Bak{
-		Files: []Files{},
-		Date:  time.Now(),
-	}
-	now := bak.Date.Format("20060102")
-	dir := pathutils.FromSlash(l.BaseDir, now)
+	now := time.Now()
+	dir := pathutils.FromSlash(l.BaseDir, now.Format(timeLayout))
 
 	// make dir
 	if err := os.MkdirAll(dir, 0750); err != nil {
 		return err
 	}
 
-	// jsonを作成
-	for _, f := range files {
-		_, noext, ext := pathutils.Split(f)
-		id := randstr.String(5)
-
-		bak.Files = append(bak.Files, Files{
-			Original: f,
-			Backup:   strutils.Join(noext, "-", id, ext),
-			Id:       id,
-		})
-	}
+	// Backupを作成
+	bak := NewBakFromOriginalFiles(now, files...)
 
 	// copy files
 	for _, f := range bak.Files {
@@ -68,21 +78,45 @@ func (l *List) Remove(name string) error {
 	return nil
 }
 
-func (l *List) GetList() ([]Bak, error) {
-	return nil, nil
+func (l *List) GetDateList() []*time.Time {
+	list := []*time.Time{}
+	for _, t := range l.List {
+		list = append(list, &t.Date)
+	}
+	return list
 }
 
-func (l *List) Find(name string) (*Bak, error) {
-	return nil, nil
-}
-
+// Read directory and get backup list
 func (l *List) Initilize(name string) error {
+	// Check
+	if l.Initilized {
+		return nil
+	}
+
 	// Make BaseDir
 	l.BaseDir = pathutils.FromSlash(GetBackupDir(), name, l.Id)
 	if err := os.MkdirAll(l.BaseDir, 0750); err != nil {
 		return err
 	}
 
+	// Get directory list
+	dirs, err := os.ReadDir(l.BaseDir)
+	if err != nil {
+		return err
+	}
+	for _, d := range dirs {
+		jbytes, err := os.ReadFile(path.Join(l.BaseDir, d.Name(), "meta.json"))
+		if err != nil {
+			return err
+		}
+		bak := new(Bak)
+		if err := json.Unmarshal(jbytes, bak); err != nil {
+			return err
+		}
+		l.List = append(l.List, bak)
+	}
+
 	// Read list
+	l.Initilized = true
 	return nil
 }

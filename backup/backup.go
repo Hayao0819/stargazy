@@ -13,8 +13,8 @@ type Files struct {
 }
 
 type Bak struct {
-	Files []Files
-	Date  time.Time
+	Files []Files   `json:"files"`
+	Date  time.Time `json:"date"`
 }
 
 func (b *Bak) Remove() error {
@@ -22,9 +22,5 @@ func (b *Bak) Remove() error {
 }
 
 func (b *Bak) Restore() error {
-	return nil
-}
-
-func (b *Bak) List() []string {
 	return nil
 }

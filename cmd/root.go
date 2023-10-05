@@ -12,9 +12,11 @@ import (
 
 func Root() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "stargazy",
-		Short: "Linux kernel manager",
-		Long:  "Stargazy is the tool to build, manage and backup kernels",
+		Use:           "stargazy",
+		Short:         "Linux kernel manager",
+		Long:          "Stargazy is the tool to build, manage and backup kernels",
+		SilenceErrors: true,
+		SilenceUsage:  true,
 	}
 
 	var configFile string = ""
