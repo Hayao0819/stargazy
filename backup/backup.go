@@ -1,26 +1,30 @@
 package backup
 
-import "github.com/Hayao0819/stargazy/conf"
+import (
+	"time"
+	//"github.com/Hayao0819/stargazy/kernel"
+	//errutils "github.com/Hayao0819/stargazy/utils/error"
+)
 
-func RunAllBackup(l BackupList) error {
-	list, err := (l).GetList()
-	if err != nil {
-		return err
-	}
-	for _, b := range list {
-		if err := b.Restore(); err != nil {
-			return err
-		}
-	}
+type Files struct {
+	Original string `json:"original"` // 元ファイルのフルパス
+	Backup   string `json:"backup"`   // バックアップ先でのファイル名
+	Id       string `json:"id"`       // バックアップファイルのID
+}
+
+type Bak struct {
+	Files []Files
+	Date  time.Time
+}
+
+func (b *Bak) Remove() error {
 	return nil
 }
 
-func RunAllKernelBackup() error {
-	l := KernelBackupList{}
-
-	return RunAllBackup(&l)
+func (b *Bak) Restore() error {
+	return nil
 }
 
-func GetBackupDir() string {
-	return conf.Config.BackUpDir
+func (b *Bak) List() []string {
+	return nil
 }

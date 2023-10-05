@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"os/exec"
 	"path"
 
 	"github.com/Hayao0819/stargazy/tools/lib"
+	executils "github.com/Hayao0819/stargazy/utils/exec"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +13,7 @@ func RunCmd() *cobra.Command {
 
 	cmd := cobra.Command{
 		Use:   "run",
-		Args:  cobra.NoArgs,
+		Args:  cobra.ArbitraryArgs,
 		Short: "Run stargazy",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			sgargs := []string{}
@@ -27,12 +27,14 @@ func RunCmd() *cobra.Command {
 			goargs = append(goargs, path.Join(lib.Pwd, "main.go"))
 			goargs = append(goargs, sgargs...)
 			goargs = append(goargs, args...)
+			//cmd.PrintErr("Run ", goargs)
 
-			return exec.Command("go", goargs...).Run()
+			return executils.Run("go", goargs...)
 		},
 	}
 
 	// Disable help
+	cmd.Flags().SetInterspersed(false)
 	cmd.PersistentFlags().BoolP("help", "h", false, "Print usage")
 	cmd.PersistentFlags().Lookup("help").Hidden = true
 
