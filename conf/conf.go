@@ -2,16 +2,21 @@ package conf
 
 import (
 	"errors"
+	"reflect"
 
+	"github.com/Hayao0819/stargazy/kernel"
+	reflectutils "github.com/Hayao0819/stargazy/utils/reflect"
 	"github.com/spf13/viper"
 )
 
 type AppConfig struct {
-	BackUpDir string `mapstructure:"backup_dir"`
+	BackUpDir       string          `mapstructure:"backup_dir"`
+	KernelSourceDir string          `mapstructure:"kernel_source_dir"`
+	KernelUpstream  kernel.Upstream `mapstructure:"kernel_upstream"`
 }
 
 // Global config
-var Config = AppConfig{}
+var Config = viper.New()
 
 func Initilize(configPath string) error {
 	if configPath == "" {
@@ -34,8 +39,13 @@ func Initilize(configPath string) error {
 }
 
 func Validate() error {
-	if Config.BackUpDir == "" {
-		return errors.New("Empty backup directory")
+	rv := reflect.ValueOf(Config)
+	for _, f := range reflectutils.GetFields(Config) {
+		if f.Type == reflect.TypeOf("") {
+			if rv.FieldByName(f.Name).String() == "" {
+				return errors.New("Empty " + f.Name)
+			}
+		}
 	}
 	return nil
 }

@@ -1,0 +1,16 @@
+{
+    "backup_dir": "",
+    "kernel_source_dir": "",
+    "kernel_upstream": [
+        {
+            "name": "torvalds",
+            "type": "git",
+            "url": "git@github.com:torvalds/linux.git"
+        },
+        {
+            "namd": "archlinux",
+            "type": "git",
+            "url": "https://github.com/archlinux/linux"
+        }
+    ]
+}

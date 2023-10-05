@@ -22,8 +22,12 @@ func GenConfigCmd() *cobra.Command {
 			// Get debug.json
 			json := lib.GetDebugConfPath()
 
-			// Set backup_dir
-			viper.Set("backup_dir", path.Join(lib.Pwd, "testdir", "backup"))
+			// testdir
+			testdir := path.Join(lib.Pwd, "testdir")
+
+			// Set files
+			viper.Set("backup_dir", path.Join(testdir, "backup"))
+			viper.Set("kernel_source_dir", path.Join(testdir, "kernel_source"))
 
 			// Write
 			return viper.WriteConfigAs(json)

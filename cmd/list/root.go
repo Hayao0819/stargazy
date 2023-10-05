@@ -8,5 +8,7 @@ func Root() *cobra.Command {
 		Short: "SHow the various list",
 	}
 
+	cmd.AddCommand(BackUpList())
+
 	return cmd
 }
