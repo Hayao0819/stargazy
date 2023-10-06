@@ -1,11 +1,7 @@
 package conf
 
 import (
-	"errors"
-	"reflect"
-
 	"github.com/Hayao0819/stargazy/kernel"
-	reflectutils "github.com/Hayao0819/stargazy/utils/reflect"
 	"github.com/spf13/viper"
 )
 
@@ -16,22 +12,34 @@ type AppConfig struct {
 }
 
 // Global config
-var Config = viper.New()
+var Config = AppConfig{}
 
 func Initilize(configPath string) error {
-	if configPath == "" {
-		return nil
-	}
+	vp := viper.New()
 
-	viper.SetConfigFile(configPath)
+	/*
+		if configPath == "" {
+			return nil
+		}
+	*/
 
-	viper.AutomaticEnv()
+	// Set config file
+	vp.SetConfigFile(configPath)
 
-	if err := viper.ReadInConfig(); err != nil {
+	// Set default
+	vp.SetDefault("backup_dir", "/usr/share/stargazy/backup")
+	vp.SetDefault("kernel_source_dir", "/usr/share/stargazy/kernel_source")
+
+	// Read from env
+	vp.AutomaticEnv()
+
+	// Read from configFile
+	if err := vp.ReadInConfig(); err != nil {
 		return err
 	}
 
-	if err := viper.Unmarshal(&Config); err != nil {
+	// Unmershal to global var
+	if err := vp.Unmarshal(&Config); err != nil {
 		return err
 	}
 
@@ -39,14 +47,16 @@ func Initilize(configPath string) error {
 }
 
 func Validate() error {
-	rv := reflect.ValueOf(Config)
-	for _, f := range reflectutils.GetFields(Config) {
-		if f.Type == reflect.TypeOf("") {
-			if rv.FieldByName(f.Name).String() == "" {
-				return errors.New("Empty " + f.Name)
+	/*
+		rv := reflect.ValueOf(Config)
+		for _, f := range reflectutils.GetFields(Config) {
+			if f.Type == reflect.TypeOf("") {
+				if rv.FieldByName(f.Name).String() == "" {
+					return errors.New("Empty " + f.Name)
+				}
 			}
 		}
-	}
+	*/
 	return nil
 }
 
