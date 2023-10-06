@@ -3,6 +3,7 @@ package utils
 import (
 	"archive/tar"
 	"io"
+	"os"
 	"os/exec"
 	"reflect"
 
@@ -36,9 +37,15 @@ var Exec = struct {
 }
 
 var File = struct {
-	Copy func(src string, dest string) error
+	Copy               func(src string, dest string) error
+	ReadDir            func(name string) (*[]os.DirEntry, *[]os.DirEntry, error)
+	DirEntryToFullPath func(dir string, entry *[]os.DirEntry) *[]string
+	ReadDirFullPath    func(name string) (*[]string, *[]string, error)
 }{
-	Copy: fileutils.Copy,
+	Copy:               fileutils.Copy,
+	ReadDir:            fileutils.ReadDir,
+	DirEntryToFullPath: fileutils.DirEntryToFullPath,
+	ReadDirFullPath:    fileutils.ReadDirFullPath,
 }
 
 var Json = struct {
