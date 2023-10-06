@@ -26,9 +26,14 @@ func Root() *cobra.Command {
 
 	// Config flags
 	cmd.PersistentFlags().String("backup-dir", "", "Specify backup directory")
-	conf.Viper.BindPFlag("backup_dir", cmd.PersistentFlags().Lookup("backup-dir"))
 	cmd.PersistentFlags().String("kernel-source-dir", "", "Specify kernel source directory")
-	conf.Viper.BindPFlag("kernel_source_dir", cmd.PersistentFlags().Lookup("backup-dir"))
+
+	errutils.RunFuncWithErrorExit(cmd, func() error {
+		return conf.Viper.BindPFlag("backup_dir", cmd.PersistentFlags().Lookup("backup-dir"))
+	})
+	errutils.RunFuncWithErrorExit(cmd, func() error {
+		return conf.Viper.BindPFlag("kernel_source_dir", cmd.PersistentFlags().Lookup("backup-dir"))
+	})
 
 	// Load config
 	cobra.OnInitialize(func() {
