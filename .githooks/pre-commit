@@ -2,7 +2,7 @@
 
 if [ -n "$(golangci-lint run --out-format tab)" ]; then
     echo "Please fix golangci-lint error" >&2
-    echo 'Run "golangci-lint run" to show more information' >&2
+    golangci-lint run  >&2
     exit 1
 fi
 exit 0
