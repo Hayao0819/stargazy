@@ -1,14 +1,19 @@
 package conf
 
 import (
-	"github.com/Hayao0819/stargazy/kernel"
 	"github.com/spf13/viper"
 )
 
 type AppConfig struct {
-	BackUpDir       string          `mapstructure:"backup_dir"`
-	KernelSourceDir string          `mapstructure:"kernel_source_dir"`
-	KernelUpstream  kernel.Upstream `mapstructure:"kernel_upstream"`
+	BackUpDir       string           `mapstructure:"backup_dir"`
+	KernelSourceDir string           `mapstructure:"kernel_source_dir"`
+	KernelUpstream  []KernelUpstream `mapstructure:"kernel_upstream"`
+}
+
+type KernelUpstream struct {
+	Name string `mapstructure:"name"`
+	Type string `mapstructure:"type"`
+	Url  string `mapstructure:"url"`
 }
 
 // Global config
