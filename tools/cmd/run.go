@@ -29,7 +29,7 @@ func RunCmd() *cobra.Command {
 			goargs = append(goargs, args...)
 			//cmd.PrintErr("Run ", goargs)
 
-			return executils.Run("go", goargs...)
+			return executils.RunWithStdIo("go", goargs...)
 		},
 	}
 

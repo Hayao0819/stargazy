@@ -3,12 +3,15 @@ package utils
 import (
 	"archive/tar"
 	"io"
+	"os/exec"
+	"reflect"
 
 	errutils "github.com/Hayao0819/stargazy/utils/error"
 	executils "github.com/Hayao0819/stargazy/utils/exec"
 	fileutils "github.com/Hayao0819/stargazy/utils/file"
 	jsonutils "github.com/Hayao0819/stargazy/utils/json"
 	pathutils "github.com/Hayao0819/stargazy/utils/path"
+	reflectutils "github.com/Hayao0819/stargazy/utils/reflect"
 	strutils "github.com/Hayao0819/stargazy/utils/str"
 	tarutils "github.com/Hayao0819/stargazy/utils/tar"
 	"github.com/spf13/cobra"
@@ -23,9 +26,13 @@ var Err = struct {
 }
 
 var Exec = struct {
-	Run func(name string, args ...string) error
+	RunWithStdIo           func(name string, args ...string) error
+	CommandWithStdIo       func(name string, args ...string) *exec.Cmd
+	CheckAvailableCommands func(cmds ...string) error
 }{
-	Run: executils.Run,
+	RunWithStdIo:           executils.RunWithStdIo,
+	CommandWithStdIo:       executils.CommandWithStdIo,
+	CheckAvailableCommands: executils.CheckAvailableCommands,
 }
 
 var File = struct {
@@ -50,6 +57,12 @@ var Path = struct {
 	BaseWithoutExt:      pathutils.BaseWithoutExt,
 	RenamePathWithoutEx: pathutils.RenamePathWithoutExt,
 	Split:               pathutils.Split,
+}
+
+var Reflect = struct {
+	GetFields func(value any) []*reflect.StructField
+}{
+	GetFields: reflectutils.GetFields,
 }
 
 var Str = struct {
