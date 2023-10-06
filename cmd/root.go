@@ -24,6 +24,13 @@ func Root() *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&configFile, "config", "", "", "Specify stargazy config")
 	cmd.AddCommand(backup.Root(), list.Root(), get.Root(), debug.Root())
 
+	// Config flags
+	cmd.PersistentFlags().String("backup-dir", "", "Specify backup directory")
+	conf.Viper.BindPFlag("backup_dir", cmd.PersistentFlags().Lookup("backup-dir"))
+	cmd.PersistentFlags().String("kernel-source-dir", "", "Specify kernel source directory")
+	conf.Viper.BindPFlag("kernel_source_dir", cmd.PersistentFlags().Lookup("backup-dir"))
+
+	// Load config
 	cobra.OnInitialize(func() {
 		errutils.RunFuncWithErrorExit(cmd, func() error { return conf.Initilize(configFile) })
 		errutils.RunFuncWithErrorExit(cmd, conf.Validate)
