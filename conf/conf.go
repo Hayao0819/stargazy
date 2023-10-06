@@ -18,33 +18,29 @@ type KernelUpstream struct {
 
 // Global config
 var Config = AppConfig{}
+var Viper = viper.New()
 
 func Initilize(configPath string) error {
-	vp := viper.New()
-
-	/*
-		if configPath == "" {
-			return nil
-		}
-	*/
 
 	// Set config file
-	vp.SetConfigFile(configPath)
+	Viper.SetConfigFile(configPath)
 
 	// Set default
-	vp.SetDefault("backup_dir", "/usr/share/stargazy/backup")
-	vp.SetDefault("kernel_source_dir", "/usr/share/stargazy/kernel_source")
+	Viper.SetDefault("backup_dir", "/usr/share/stargazy/backup")
+	Viper.SetDefault("kernel_source_dir", "/usr/share/stargazy/kernel_source")
 
 	// Read from env
-	vp.AutomaticEnv()
+	Viper.AutomaticEnv()
 
 	// Read from configFile
-	if err := vp.ReadInConfig(); err != nil {
-		return err
+	if configPath != "" {
+		if err := Viper.ReadInConfig(); err != nil {
+			return err
+		}
 	}
 
 	// Unmershal to global var
-	if err := vp.Unmarshal(&Config); err != nil {
+	if err := Viper.Unmarshal(&Config); err != nil {
 		return err
 	}
 

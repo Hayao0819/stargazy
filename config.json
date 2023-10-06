@@ -1,3 +1,4 @@
 {
-    "backup_dir": "/usr/share/stargazy/backups"
+    "backup_dir": "/usr/share/stargazy/backups",
+    "kernel_source_dir": "/usr/share/stargazy/kernel_source"
 }
