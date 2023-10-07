@@ -16,6 +16,14 @@ func GetUpstreamNameList() []string {
 
 type Upstream conf.KernelUpstream
 
+func GetUpstreamsFromConfig()([]*Upstream){
+	list := []*Upstream{}
+	for _,u := range conf.Config.KernelUpstream{
+		list=append(list, (*Upstream)(&u))
+	}
+	return list
+}
+
 func (u *Upstream) GetType() string {
 	return strings.ToLower(u.Type)
 }
