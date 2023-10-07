@@ -3,5 +3,4 @@
     "go.lintOnSave": "workspace",
     "go.lintTool": "golangci-lint",
     "go.lintFlags": [],
-    "editor.tabSize": 4
 }
