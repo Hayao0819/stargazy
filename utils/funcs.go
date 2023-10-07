@@ -74,8 +74,12 @@ var Reflect = struct {
 
 var Str = struct {
 	Join func(elems ...string) string
+	IsEmpty func(str string) bool 
+	Match func(pattern, name string) bool
 }{
 	Join: strutils.Join,
+	IsEmpty: strutils.IsEmpty,
+	Match: strutils.Match,
 }
 
 var Tar = struct {
