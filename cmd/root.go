@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/Hayao0819/stargazy/cmd/backup"
+	"github.com/Hayao0819/stargazy/cmd/build"
 	"github.com/Hayao0819/stargazy/cmd/debug"
 	"github.com/Hayao0819/stargazy/cmd/get"
 	"github.com/Hayao0819/stargazy/cmd/list"
@@ -22,7 +23,7 @@ func Root() *cobra.Command {
 
 	var configFile string = ""
 	cmd.PersistentFlags().StringVarP(&configFile, "config", "", "", "Specify stargazy config")
-	cmd.AddCommand(backup.Root(), list.Root(), get.Root(), debug.Root())
+	cmd.AddCommand(backup.Root(), list.Root(), get.Root(), debug.Root(), build.Root())
 
 	// Config flags
 	cmd.PersistentFlags().String("backup-dir", "", "Specify backup directory")

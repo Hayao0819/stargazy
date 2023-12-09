@@ -2,7 +2,7 @@ package build
 
 import "github.com/spf13/cobra"
 
-func RootCmd() *cobra.Command {
+func Root() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "build",
 		Short: "Build kernel",
