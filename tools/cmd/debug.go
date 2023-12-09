@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"os"
 	"path"
 
 	"github.com/Hayao0819/stargazy/conf"
@@ -25,9 +26,19 @@ func GenConfigCmd() *cobra.Command {
 			// testdir
 			testdir := path.Join(lib.Pwd, "testdir")
 
+			// Set dirs
+			backupDir := path.Join(testdir, "backup")
+			kernelSourceDir := path.Join(testdir, "kernel_source")
+
+			for _, dir := range []string{backupDir, kernelSourceDir} {
+				if err := os.MkdirAll(dir, 0750); err != nil {
+					return err
+				}
+			}
+
 			// Set files
-			viper.Set("backup_dir", path.Join(testdir, "backup"))
-			viper.Set("kernel_source_dir", path.Join(testdir, "kernel_source"))
+			viper.Set("backup_dir", backupDir)
+			viper.Set("kernel_source_dir", kernelSourceDir)
 
 			// Write
 			return viper.WriteConfigAs(json)
