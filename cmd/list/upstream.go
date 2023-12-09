@@ -5,13 +5,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func UpstreamList() *cobra.Command{
+func UpstreamList() *cobra.Command {
 	cmd := cobra.Command{
-		Use: "upstream",
+		Use:   "upstream",
 		Short: "List upstream",
-		Args: cobra.NoArgs,
+		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			for _,u := range kernel.GetUpstreamsFromConfig(){
+			for _, u := range kernel.GetUpstreamsFromConfig() {
 				cmd.Println(u.Name)
 			}
 			return nil
